@@ -1,6 +1,5 @@
 body {
-  font-family: sans-serif;
-  background: #2c3e50;
+  background: #0c0f15;
   margin: 0;
   padding: 0;
 }
@@ -14,6 +13,7 @@ body {
   line-height: 40px;
   border-radius: 8px;
   width: 50vw;
+  min-width: fit-content;
 }
 
 #nav-links a {
@@ -33,7 +33,7 @@ body {
   height: 40px;
   background: #1abc9c;
   z-index: 0;
-  transition: all 1s ease 0s;
+  transition: all .5s ease 0s;
   border-radius: 8px;
 }
 
