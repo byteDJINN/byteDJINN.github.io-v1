@@ -1,34 +1,42 @@
 function onload() {
   // Add navbar
+  let navbar = document.createElement("div");
+  navbar.id = "navbar";
+  document.body.appendChild(navbar);
   $(function () {
     $("#navbar").load("navbar.html", function() {
       generateNavBar();
     });
   });
-  // Add event listeners
-  
+  // Generate page title based on file name
+  let title = window.location.pathname.split("/").pop().slice(0,-5) || "home";
+  document.title = title.substring(0,1).toUpperCase() + title.substring(1);
 }
-
 
 function generateNavBar() {
   // Navbar Animation
   let navLinks = document.getElementById("nav-links");
-  let colors = ["#1abc9c", "#e74c3c", "#3498db", "#9b59b6", "#e67e22"];
-  let pages = ["", "about.html", "portfolio.html", "contact.html"];
+  let colors = ["#A40011", "#11A400", "#6300d8"];
+  let pages = ["", "portfolio.html", "contact.html"];
+  
   // Add default animation for no hover
-  navLinks.addEventListener("mouseout", function(e) {
-    console.log("OUT!");
-    let initial = document.getElementById("nav-links").children[pages.indexOf(window.location.pathname.split("/").pop())];
+  let current = document.getElementById("nav-links").children[pages.indexOf(window.location.pathname.split("/").pop())];
+
+  function sliderDefaultAnimation(e) {
     let slider = document.getElementById("navbar-slider");
-    slider.style.width = initial.getBoundingClientRect().width.toString() + "px";
-    slider.style.height = initial.getBoundingClientRect().height.toString() + "px";
-    slider.style.left = initial.getBoundingClientRect().left.toString() + "px";
-    slider.style.top = initial.getBoundingClientRect().top.toString() + "px";
-    slider.style.backgroundColor = colors[Array.from(initial.parentNode.children).indexOf(initial)];
-  });
+    slider.style.width = current.getBoundingClientRect().width.toString() + "px";
+    slider.style.height = current.getBoundingClientRect().height.toString() + "px";
+    slider.style.left = current.getBoundingClientRect().left.toString() + "px";
+    slider.style.top = current.getBoundingClientRect().top.toString() + "px";
+    slider.style.backgroundColor = colors[Array.from(current.parentNode.children).indexOf(current)];
+  }
+  navLinks.addEventListener("mouseout", sliderDefaultAnimation, false);
+  window.addEventListener("resize", sliderDefaultAnimation, false);
+
+  sliderDefaultAnimation(); // Call it once to move slider to proper place
 
   // Add hover animation for each link
-  navLinks.querySelectorAll("a").forEach(function(link) { // TODO: Add animation for mouse out for it to go back to whatever page is currently on
+  navLinks.querySelectorAll("a").forEach(function(link) { 
     link.addEventListener("mouseover", function(e) {
       let slider = document.getElementById("navbar-slider");
       slider.style.width = e.target.getBoundingClientRect().width.toString() + "px";
@@ -36,13 +44,19 @@ function generateNavBar() {
       slider.style.left = e.target.getBoundingClientRect().left.toString() + "px";
       slider.style.top = e.target.getBoundingClientRect().top.toString() + "px";
       slider.style.backgroundColor = colors[Array.from(e.target.parentNode.children).indexOf(e.target)];
-    });
+    }, false);
   });
+  // Scroll Progress Bar
+  document.getElementById("scroll-progress-bar").style.background = colors[Array.from(current.parentNode.children).indexOf(current)];
 
-  let initial = document.getElementById("nav-links").firstElementChild;
-  let slider = document.getElementById("navbar-slider");
-  slider.style.width = initial.getBoundingClientRect().width.toString() + "px";
-  slider.style.height = initial.getBoundingClientRect().height.toString() + "px";
-  slider.style.left = initial.getBoundingClientRect().left.toString() + "px";
-  slider.style.top = initial.getBoundingClientRect().top.toString() + "px";
+  document.addEventListener("scroll", function() {
+    let scrollTop = window.scrollY;
+    let docHeight = document.body.offsetHeight;
+    let winHeight = window.innerHeight;
+    let scrollPercent = scrollTop / (docHeight - winHeight);
+    let scrollPercentRounded = Math.round(scrollPercent * 100);
+    document.getElementById("scroll-progress-bar").style.width = scrollPercentRounded + "%";
+  }, false);
+
+  
 }
