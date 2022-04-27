@@ -22,30 +22,21 @@ function generateNavBar() {
   // Add default animation for no hover
   let current = document.getElementById("nav-links").children[pages.indexOf(window.location.pathname.split("/").pop())];
 
-  function sliderDefaultAnimation(e) {
+  function sliderMoveTo(element) {
     let slider = document.getElementById("navbar-slider");
-    slider.style.width = current.getBoundingClientRect().width.toString() + "px";
-    slider.style.height = current.getBoundingClientRect().height.toString() + "px";
-    slider.style.left = current.getBoundingClientRect().left.toString() + "px";
-    slider.style.top = current.getBoundingClientRect().top.toString() + "px";
-    slider.style.backgroundColor = colors[Array.from(current.parentNode.children).indexOf(current)];
+    slider.style.width = element.getBoundingClientRect().width.toString() + "px";
+    slider.style.height = element.getBoundingClientRect().height.toString() + "px";
+    slider.style.left = element.getBoundingClientRect().left.toString() + "px";
+    slider.style.top = element.getBoundingClientRect().top.toString() + "px";
+    slider.style.backgroundColor = colors[Array.from(element.parentNode.children).indexOf(element)];
   }
-  navLinks.addEventListener("mouseout", sliderDefaultAnimation, false);
-  window.addEventListener("resize", sliderDefaultAnimation, false);
+  navLinks.addEventListener("mouseout", () => sliderMoveTo(current), false);
+  window.addEventListener("resize", () => sliderMoveTo(current), false);
 
-  sliderDefaultAnimation(); // Call it once to move slider to proper place
+  sliderMoveTo(current); // Call it once to move slider to proper place
 
   // Add hover animation for each link
-  navLinks.querySelectorAll("a").forEach(function(link) { 
-    link.addEventListener("mouseover", function(e) {
-      let slider = document.getElementById("navbar-slider");
-      slider.style.width = e.target.getBoundingClientRect().width.toString() + "px";
-      slider.style.height = e.target.getBoundingClientRect().height.toString() + "px";
-      slider.style.left = e.target.getBoundingClientRect().left.toString() + "px";
-      slider.style.top = e.target.getBoundingClientRect().top.toString() + "px";
-      slider.style.backgroundColor = colors[Array.from(e.target.parentNode.children).indexOf(e.target)];
-    }, false);
-  });
+  navLinks.querySelectorAll("a").forEach((link) => link.addEventListener("mouseover", (e) => sliderMoveTo(e.target), false));
   // Scroll Progress Bar
   document.getElementById("scroll-progress-bar").style.background = colors[Array.from(current.parentNode.children).indexOf(current)];
 
@@ -57,6 +48,4 @@ function generateNavBar() {
     let scrollPercentRounded = Math.round(scrollPercent * 100);
     document.getElementById("scroll-progress-bar").style.width = scrollPercentRounded + "%";
   }, false);
-
-  
 }
