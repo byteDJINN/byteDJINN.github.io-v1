@@ -38,7 +38,7 @@ function generateNavBar() {
   // Add hover animation for each link
   navLinks.querySelectorAll("a").forEach((link) => link.addEventListener("mouseover", (e) => sliderMoveTo(e.target), false));
   // Scroll Progress Bar
-  document.getElementById("scroll-progress-bar").style.background = colors[Array.from(current.parentNode.children).indexOf(current)];
+  document.getElementById("scroll-progress-bar").style.background = "linear-gradient(to right, #1e2530, " + colors[Array.from(current.parentNode.children).indexOf(current)] + " 100%)";
 
   document.addEventListener("scroll", function() {
     let scrollTop = window.scrollY;
