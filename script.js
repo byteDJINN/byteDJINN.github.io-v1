@@ -23,15 +23,23 @@ function updateContent() {
 }
 
 function updateScrollBar() {
+  let length = 10; // percent length of progress indicator
   let colors = ["#A40011", "#11A400", "#6300d8"];
-  let winHeight = $(window).height();
-  let docHeight = $(document).height();
-  let scrollTop = $(window).scrollTop(); //NaN or zero at top
-  let trackLength = docHeight - winHeight;
-  let pctScrolled = Math.round(scrollTop / trackLength * 100);
-  document.getElementById("scroll-progress-bar").style.width = pctScrolled + "%";
-  document.getElementById("scroll-progress-bar").style.background = "linear-gradient(to right, #1e2530, " + colors[currentPage] + " 100%)";
-}
+  let container = document.getElementById("content");
+  var scrollPercentage = Math.round(100 * container.scrollTop / (container.scrollHeight - container.clientHeight)); 
+  if (isNaN(scrollPercentage)) {
+    scrollPercentage = 0;
+  }
+  
+  let left = scrollPercentage - length + "%";
+  let right = scrollPercentage + length + "%";
+  scrollPercentage = scrollPercentage + "%";
+  document.getElementById("scroll-progress-bar").style.width = 100 + "%";
+  document.getElementById("scroll-progress-bar").style.background = "linear-gradient(to right, "
+    + "#1e2530 " + left + ", "
+  + colors[currentPage] + " " + scrollPercentage + ", "
+    + "#1e2530 " + right + ")";
+} 
 
 // Does necessary javascript for navbar generation
 function generateNavBar() {
@@ -42,7 +50,7 @@ function generateNavBar() {
   }, false));
   updateContent(); // Call once for initial update
 
-  document.addEventListener("scroll", updateScrollBar, false);
+  document.getElementById("content").addEventListener("scroll", updateScrollBar, false);
   updateScrollBar(); // Call once for initial update
   
 }
