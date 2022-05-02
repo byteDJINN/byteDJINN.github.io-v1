@@ -1,4 +1,5 @@
-var currentPage = 0;
+var currentPage = window.location.hash.substring(1) || 0;
+
 var pages = ["views/home.html", "views/portfolio.html", "views/contact.html"];
 
 function onload() {
