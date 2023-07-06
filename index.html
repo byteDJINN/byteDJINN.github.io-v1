@@ -1,21 +1,72 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body onload="onload()">
-    <div id="navbar">
-      <nav id="nav-links">
-        <a>Home</a>
-        <a>Portfolio</a>
-        <a>Contact</a>
-      </nav>
-      <div id="scroll-progress-bar"></div>
-    </div>
 
-    <div id="content"></div>
-  </body>
+<head>
+  <title>DJIMON JAYASUNDERA</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    
+    <div class="nav">
+      <ul>
+        <li><a href="#" onclick="showContent('interests')">Skills</a></li>
+        <li><a href="#" onclick="showContent('nav2')">Links</a></li>
+        <!-- Add more menu items here -->
+      </ul>
+    </div>
+    <div class="separator"></div> <!-- Add the separator element -->
+    <div class="content">
+      <div id="about">
+        Hi! I'm Djimon. <br>
+        I'm from Perth. <br>
+      </div>
+      <div id="interests" class="hidden">
+        <ul>
+          <li><a href="#" onclick="showInterest('interest1')">Computer Science</a></li>
+          <li><a href="#" onclick="showInterest('interest2')">Cybersecurity</a></li>
+          <li><a href="#" onclick="showInterest('interest3')">Web Development</a></li>
+          <li><a href="#" onclick="showInterest('interest4')">Game Development</a></li>
+        </ul>
+        <div id="interest1" class="hidden">
+          <u>data structures and algorithms</u><br>
+          &nbsp;&nbsp;98% for UWA <a class="uable" target="_blank" href="https://handbooks.uwa.edu.au/unitdetails?code=CITS2200">CITS2200</a><br>
+          &nbsp;&nbsp;<a class="uable" target="_blank" href="https://aio.edu.au/">AIO</a> bronze medal (2015,2016,2017)<br>
+          &nbsp;&nbsp;<a class="uable" target="_blank" href="https://aio.edu.au/">AIO</a> silver medal (2018,2019)<br>
+          <br><u>scripting</u><br>
+          &nbsp;&nbsp;93% for UWA <a class="uable" target="_blank"href="https://handbooks.uwa.edu.au/unitdetails?code=CITS2003">CITS2003</a><br>
+
+        </div>
+        <div id="interest2" class="hidden">
+          <u>cyber security book of knowledge</u><br>
+          &nbsp;&nbsp;96% for UWA <a class="uable" target="_blank"
+            href="https://handbooks.uwa.edu.au/unitdetails?code=CITS1003">CITS1003</a><br>
+          <br><u>penetration testing</u><br>
+          &nbsp;&nbsp;top 1% signal | top #8 reputation (AUS 2022): <a class="uable" target="_blank"
+            href="https://hackerone.com/">HackerOne</a><br>
+        </div>
+        <div id="interest3" class="hidden">
+          <u>vue.js + django</u><br>
+          &nbsp;&nbsp;built web app for <a class="uable" target="_blank" href="https://www.wais.org.au/">WAIS</a> with <a
+            class="uable" target="_blank" href="https://codersforcauses.org/">CFC</a><br>
+          <br><u>flutter + supabase</u><br>
+          &nbsp;&nbsp;building mobile app for UWA events<br>
+          <br><u>svelte + vercel</u><br>
+          &nbsp;&nbsp;building website tracking news trends<br>
+        </div>
+        <div id="interest4" class="hidden">
+          <u>unity</u><br>
+          &nbsp;&nbsp;participated in multiple game jams on <a class="uable" target="_blank" href="https://developerdjay.itch.io/">itch.io</a><br>
+        </div>
+      </div>
+      <div id="nav2" class="hidden">
+        <a target="_blank" href="https://www.linkedin.com/in/djayasundera/">linkedin</a><br>
+        <a target="_blank" href="https://github.com/developerdjay/">github</a><br>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>

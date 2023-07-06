@@ -1,58 +1,44 @@
-var currentPage = window.location.hash.substring(1) || 0;
-
-var pages = ["views/home.html", "views/portfolio.html", "views/contact.html"];
-
-function onload() {
-  // Add navbar
-  generateNavBar();
-  
-}
-
-// Updates elements on the page
-function updateContent() {
-  // Update the content div
-  fetch(pages[currentPage])
-  .then(response => response.text())
-  .then(text => document.getElementById("content").innerHTML = text);
-
-  // Update the page title
-  let title = pages[currentPage].split("/").pop().slice(0, -5) || "home";
-  document.title = "DJ " + title.substring(0, 1).toUpperCase() + title.substring(1);
-
-  // Update the scrollbar -> different colour for each page
-  updateScrollBar();
-}
-
-function updateScrollBar() {
-  let length = 10; // percent length of progress indicator
-  let colors = ["#A40011", "#11A400", "#6300d8"];
-  let container = document.getElementById("content");
-  var scrollPercentage = Math.round(100 * container.scrollTop / (container.scrollHeight - container.clientHeight)); 
-  if (isNaN(scrollPercentage)) {
-    scrollPercentage = 0;
+function showContent(id) {
+  // Hide all content sections
+  var contentSections = document.getElementsByClassName('content')[0].children;
+  for (var i = 0; i < contentSections.length; i++) {
+    contentSections[i].classList.add('hidden');
   }
-  
-  let left = scrollPercentage - length + "%";
-  let right = scrollPercentage + length + "%";
-  scrollPercentage = scrollPercentage + "%";
-  document.getElementById("scroll-progress-bar").style.width = 100 + "%";
-  document.getElementById("scroll-progress-bar").style.background = "linear-gradient(to right, "
-    + "#1e2530 " + left + ", "
-  + colors[currentPage] + " " + scrollPercentage + ", "
-    + "#1e2530 " + right + ")";
-} 
 
-// Does necessary javascript for navbar generation
-function generateNavBar() {
-  navLinks = document.getElementById("nav-links");
-  navLinks.querySelectorAll("a").forEach((link) => link.addEventListener("click", (event) => {
-    currentPage = Array.from(event.target.parentNode.children).indexOf(event.target);
-    updateContent();
-  }, false));
-  updateContent(); // Call once for initial update
+  // Show the selected content section
+  document.getElementById(id).classList.remove('hidden');
 
-  document.getElementById("content").addEventListener("scroll", updateScrollBar, false);
-  updateScrollBar(); // Call once for initial update
-  
+  var interests = document.getElementById('interests');
+  var interestSections = interests.children;
+
+  // Show the links (unordered list)
+  var links = interests.querySelector('ul');
+  links.classList.remove('hidden');
+
+  // Hide all interest sections except the selected interest
+  for (var i = 1; i < interestSections.length; i++) {
+    if (interestSections[i].id === id) {
+      interestSections[i].classList.remove('hidden');
+    } else {
+      interestSections[i].classList.add('hidden');
+    }
+  }
 }
 
+function showInterest(id) {
+  var interests = document.getElementById('interests');
+  var interestSections = interests.children;
+
+  // Hide all interest sections
+  for (var i = 1; i < interestSections.length; i++) {
+    interestSections[i].classList.add('hidden');
+  }
+
+  // Hide the links (unordered list)
+  var links = interests.querySelector('ul');
+  links.classList.add('hidden');
+
+  // Show the selected interest section
+  var selectedInterest = document.getElementById(id);
+  selectedInterest.classList.remove('hidden');
+}
